@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: mydatabase
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      backend:
+        ipv4_address: 172.20.0.2
+
+  web:
+    build: ./web
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_HOST: 172.20.0.2  # 修改为 db 服务的静态 IP
+      DATABASE_USER: root
+      DATABASE_PASSWORD: example
+      DATABASE_NAME: mydatabase
+    depends_on:
+      - db
+    networks:
+      backend:
+        ipv4_address: 172.20.0.3
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  db-data:
