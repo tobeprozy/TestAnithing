@@ -1,0 +1,4 @@
+include Tool/*.so
+include Tool/*.pyi
+include Tool/*.py
+

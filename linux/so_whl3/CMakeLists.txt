@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.2)
+project(Performance)
+if (NOT DEFINED BUILD_TYPE)
+    set(BUILD_TYPE "pcie")
+endif()
+include(build_unix.cmake)
