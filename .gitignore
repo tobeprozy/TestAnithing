@@ -4,3 +4,5 @@
 **/models/
 **/datasets/
 *zip
+*/dist/
+*/pyadd.egg-info
