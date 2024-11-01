@@ -1,7 +1,0 @@
-pyadd.c
-pyadd.cpp
-setup.py
-pyadd.egg-info/PKG-INFO
-pyadd.egg-info/SOURCES.txt
-pyadd.egg-info/dependency_links.txt
-pyadd.egg-info/top_level.txt
