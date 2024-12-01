@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple WebRTC Example</title>
+</head>
+<body>
+
+<video id="localVideo" autoplay muted></video>
+<video id="remoteVideo" autoplay></video>
+
+<script>
+    const localVideo = document.getElementById('localVideo');
+    const remoteVideo = document.getElementById('remoteVideo');
+
+    const configuration = {'iceServers': [{'urls': 'stun:stun.l.google.com:19302'}]};
+    const peerConnection = new RTCPeerConnection(configuration);
+
+    peerConnection.onicecandidate = ({candidate}) => {
+        if (candidate) {
+            sendMessage({'candidate': candidate});
+        }
+    };
+
+    peerConnection.ontrack = (event) => {
+        remoteVideo.srcObject = event.streams[0];
+    };
+
+    const ws = new WebSocket('ws://172.25.4.156:5678');
+    ws.onopen = () => {
+        console.log('WebSocket connection established');
+        createOffer();
+    };
+    ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+    ws.onclose = (event) => {
+        console.log('WebSocket connection closed', event);
+    };
+    ws.onmessage = async (message) => {
+        const data = JSON.parse(message.data);
+        if (data.answer) {
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+        } else if (data.offer) {
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+            const answer = await peerConnection.createAnswer();
+            await peerConnection.setLocalDescription(answer);
+            sendMessage({'answer': answer});
+        } else if (data.candidate) {
+            await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+        }
+    };
+
+    function sendMessage(message) {
+        ws.send(JSON.stringify(message));
+    }
+
+    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(stream => {
+        localVideo.srcObject = stream;
+        stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
+    }).catch(error => console.error(error));
+
+    async function createOffer() {
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+        sendMessage({'offer': offer});
+    }
+</script>
+
+</body>
+</html>

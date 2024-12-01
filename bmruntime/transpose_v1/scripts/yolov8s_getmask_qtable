@@ -1,0 +1,4 @@
+mask_info F16
+output1 F16
+/Reshape_output_0_Reshape F16
+/MatMul_output_0_MatMul F16

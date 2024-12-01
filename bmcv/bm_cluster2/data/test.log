@@ -1,0 +1,70 @@
+linaro@bm1684:/data/bm_cluster2$ ./run.sh
+cur dir: /data/bm_cluster2/build
+base mode, starting......
+-- Configuring done
+CMake Warning at CMakeLists.txt:25 (add_executable):
+  Cannot generate a safe runtime search path for target test because files in
+  some directories may conflict with libraries in implicit directories:
+
+    runtime library [libbmcv.so.0] in /usr/lib may be hidden by files in:
+      /opt/sophon/libsophon-current/lib
+
+  Some of these libraries may not be found correctly.
+
+
+-- Generating done
+-- Build files have been written to: /data/bm_cluster2/build
+Scanning dependencies of target test
+[ 50%] Building CXX object CMakeFiles/test.dir/main.cpp.o
+[100%] Linking CXX executable test
+[100%] Built target test
+******./test ../data/6k.txt output1.txt 128 256 0.01 2 8 2******
+read input_data success
+------Test Cluster Begin!------
+[Stage-1]cos_similarity TPU using time: 0.0953(s)
+[Stage-2]matrix_prune TPU using time: 0.0007(s)
+[Stage-3]lap_matrix TPU using time: 0.0003(s)
+[Computation Time] Time QR: 0.071983 seconds
+[Computation Time] QR PostProcess: 0.000538 seconds
+[Computation Time] QR Total: 0.072521 seconds
+[Stage-4]qr external CPU using time: 0.0728(s)
+[INFO] start random_mode: CONST_WEIGHT.
+[Random info]1608637542
+[Stage-5]knn TPU using time: 0.0005(s)
+[Final-Total]bmcv_cluster TPU using time: 0.17(s)
+write output_data success
+------Test Cluster Success!------
+******./test ../data/6k.txt output2.txt 600 256 0.01 2 8 2******
+read input_data success
+------Test Cluster Begin!------
+[Stage-1]cos_similarity TPU using time: 0.0394(s)
+[Stage-2]matrix_prune TPU using time: 0.0120(s)
+[Stage-3]lap_matrix TPU using time: 0.0008(s)
+[Computation Time] Time QR: 1.049439 seconds
+[Computation Time] QR PostProcess: 0.011234 seconds
+[Computation Time] QR Total: 1.060673 seconds
+[Stage-4]qr external CPU using time: 1.0644(s)
+[INFO] start random_mode: CONST_WEIGHT.
+[Random info]1608637542
+[Stage-5]knn TPU using time: 0.0005(s)
+[Final-Total]bmcv_cluster TPU using time: 1.12(s)
+write output_data success
+------Test Cluster Success!------
+******./test ../data/6k.txt output3.txt 2164 256 0.01 2 8 2******
+read input_data success
+------Test Cluster Begin!------
+[Stage-1]cos_similarity TPU using time: 0.0432(s)
+[Stage-2]matrix_prune TPU using time: 0.1788(s)
+[Stage-3]lap_matrix TPU using time: 0.0072(s)
+[Computation Time] Time QR: 31.902512 seconds
+[Computation Time] QR PostProcess: 0.190257 seconds
+[Computation Time] QR Total: 32.092769 seconds
+[Stage-4]qr external CPU using time: 32.1439(s)
+[INFO] start random_mode: CONST_WEIGHT.
+[Random info]1608637542
+[Stage-5]knn TPU using time: 0.0006(s)
+[Final-Total]bmcv_cluster TPU using time: 32.40(s)
+write output_data success
+------Test Cluster Success!------
+脚本执行完成
+linaro@bm1684:/data/bm_cluster2$

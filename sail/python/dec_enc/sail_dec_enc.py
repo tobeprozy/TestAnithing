@@ -4,31 +4,39 @@ import threading
 import queue
 import time
 import os
+import numpy as np
 
 def decode_and_enqueue(handle, device_id, video_path, q, queue_lock):
     decoder = sail.Decoder(video_path, True, device_id)
     while True:
+        frame_interval=0
+        frame_counter=0s
         image = decoder.read(handle)
+        fps=decoder.get_fps()
         if image is None:
             break
         with queue_lock:
-            try:
-                q.put_nowait(image)  # 确保使用正确的队列实例变量名
-            except queue.Full:  # 正确捕获queue.Full异常
-                q.get_nowait()  # 如果队列满了，剔除最旧的数据
-                q.put_nowait(image)
+            if (frame_counter % frame_interval == 0):
+                try:
+                    q.put_nowait(image)  # 确保使用正确的队列实例变量名
+                except queue.Full:  # 正确捕获queue.Full异常
+                    q.get_nowait()  # 如果队列满了，剔除最旧的数据
+                    q.put_nowait(image)
+            frame_counter += 1
+        decoder.release()
 
-def process_queue(queue, bmcv, queue_id):
+def process_queue(queue_, bmcv, queue_id):
     i = 0
     while True:
-        try:
-            img = queue.get(timeout=1)  # 如果1秒内队列中没有数据，将抛出queue.Empty异常
-            print(f"imwrite {i}, queue_id: {queue_id}")
-            bmcv.imwrite(f"{queue_id}_{i}.jpg", img)  # 假设这是保存图片的代码
-            # bmcv.imencode(".jpg", img)  # 假设这是编码图片的代码
-            # print(f"imencode {i}, queue_id: {queue_id}")
+        try: 
+            img = queue_.get(timeout=1)
+            # print(f"imwrite {i}, queue_id: {queue_id}")
+            # bmcv.imwrite(f"./multi-channel_decoded_images/{queue_id}_{i}.jpg", img)
+            print(f"imencode {i}, queue_id: {queue_id}")
+            encode_img=bmcv.imencode(".jpg",img)
+            print(encode_img)
             i += 1
-        except queue.Empty:
+        except queue.Empty:  # 注意这里的改动
             print("队列为空，等待图像...")
             continue
 
@@ -37,7 +45,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--device_id", type=int, default=0, help="dev_id")
     parser.add_argument('--video_url', type=str, default="rtsp://admin:jdsm8888@27.151.43.4/Streaming/tracks/601?starttime=20240730T160518Z&endtime=20240730T161140Z", help='video url, can be rtsp, file path.')
-    parser.add_argument("--num_queues", type=int, default=2, help="Number of queues")
+    parser.add_argument("--num_queues", type=int, default=1, help="Number of queues")
     parser.add_argument("--max_queue_size", type=int, default=10, help="Maximum size of each queue")
     args = parser.parse_args()
 
