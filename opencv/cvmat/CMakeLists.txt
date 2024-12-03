@@ -25,7 +25,7 @@ if (${TARGET_ARCH} STREQUAL "base")
     set(OpenCV_DIR /opt/sophon/sophon-opencv-latest/lib/cmake/opencv4/)
     find_package(OpenCV REQUIRED)
     include_directories(${OpenCV_INCLUDE_DIRS})
-    
+
     # use ffmpeg
     set(FFMPEG_DIR  /opt/sophon/sophon-ffmpeg-latest/lib/cmake)
     find_package(FFMPEG REQUIRED)

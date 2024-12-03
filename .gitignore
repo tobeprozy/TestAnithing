@@ -6,3 +6,4 @@
 *zip
 */dist/
 */pyadd.egg-info/
+*.onnx
