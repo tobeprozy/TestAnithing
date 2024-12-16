@@ -10,7 +10,8 @@ if __name__ == "__main__":
     cap = cv2.VideoCapture()
     if not cap.open(args.input):
         raise Exception("can not open the video")
-    fourcc = cv2.VideoWriter_fourcc(*'h264')
+    # fourcc = cv2.VideoWriter_fourcc(*'h264')
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
     fps = cap.get(cv2.CAP_PROP_FPS)
     size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     # print(fps, size)
