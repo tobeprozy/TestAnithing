@@ -9,3 +9,5 @@
 *.onnx
 *.safetensors
 *output
+*.bin
+*.pth
