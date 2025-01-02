@@ -7,3 +7,5 @@
 */dist/
 */pyadd.egg-info/
 *.onnx
+*.safetensors
+*output
