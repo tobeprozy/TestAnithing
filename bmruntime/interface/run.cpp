@@ -11,7 +11,7 @@
 
 int main(){
 
-    std::string bmodel_path="../datasets/matmul.bmodel";
+    std::string bmodel_path="./matmul.bmodel";
     bm_net_info_t *net_info;
     bm_tensor_t input_tensors[2];
     bm_tensor_t output_tensors[1];
