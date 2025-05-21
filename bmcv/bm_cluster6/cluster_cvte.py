@@ -60,6 +60,11 @@ def cluster(embeddings, p=.01, num_spks=None, min_num_spks=2, max_num_spks=8):
 
 if __name__ == '__main__':
     embeddings = np.loadtxt('./data/6k.txt')
-    labels = cluster(embeddings[:2400,:], min_num_spks=2, max_num_spks=8)
+    import time
+    start=time.time()
+    labels = cluster(embeddings[:600,:], min_num_spks=2, max_num_spks=8)
+    end=time.time()
+    print(str(end-start)+"s")
+    
     print(list(labels))
     np.save('./data/python_2400.txt', labels)
