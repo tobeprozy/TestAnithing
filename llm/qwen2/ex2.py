@@ -2,19 +2,19 @@ from transformers import pipeline
 
 pipe = pipeline("text-generation", model="./Qwen2-7B-Instruct")
 messages = [
-        {"role": "user", "content": "Who are you? I"},
+        {"role": "user", "content": "Who are you?"},
 ]
-repose=pipe(messages)
+repose=pipe("who are you? I")
 print(repose)
 
 import numpy as np 
 import torch
 # np.save("input_ids.npy", input_ids)
 # np.save("hidden_states.npy", hidden_states)
-hidden_states = np.load("hidden_states.npy")
-input_ids = np.load("input_ids.npy")
+hidden_states = np.load("hidden_states2.npy")
+input_ids = np.load("input_ids2.npy")
 
-oring_model = pipe.model
+origin_model = pipe.model
 transformer = origin_model.model
 layers = transformer.layers
 
@@ -41,7 +41,8 @@ class GreedyHead(torch.nn.Module):
 lm_head = LmHead()
 greedy_head = GreedyHead()
 
-m_logits = lm_head(hidden_states)
+m_logits = lm_head(torch.from_numpy(hidden_states))
 token = greedy_head(m_logits)
 print(token)
+
 
