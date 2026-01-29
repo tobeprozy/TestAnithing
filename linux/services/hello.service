@@ -1,0 +1,11 @@
+[Unit]
+Description=Cyclic Logging Service
+
+[Service]
+Environment=LOG_DIR=/home/zhiyuanzhang/
+ExecStart=/usr/bin/python3 /home/zhiyuanzhang/app.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

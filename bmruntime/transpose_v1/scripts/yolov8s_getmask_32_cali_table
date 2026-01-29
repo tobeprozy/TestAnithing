@@ -1,0 +1,13 @@
+# mlir version: v1.9.beta.0-161-gfa7ac0124-20240802
+# mlir: yolov8s_post_32.mlir
+# genetated time: 2024-08-04 16:18:12.159981
+# histogram number: 2048
+# sample number: 30
+# tune number: 5
+###
+# op_name    threshold    min    max
+mask_info 0.9999907 0.0000185 0.9999907
+output1 1.0000000 0.0000000 1.0000000
+/Reshape_output_0_Reshape 1.0000000 0.0000000 1.0000000
+/MatMul_output_0_MatMul 1.0000000 0.00000000 1.0000000
+/Clip_output_0_Clip 255.0000000 0.0000000 255.0000000

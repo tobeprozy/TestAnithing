@@ -24,6 +24,11 @@ int main(int argc, char* argv[]) {
   // std::string fname = cv::format("cbmat_%d.jpg", i);
   // cv::imwrite(fname, cvmat);
 
+
+  // cv::Mat cvmat;
+  // cvmat = cv::imread("input.jpg");
+  // cv::imwrite("test.jpg", cvmat);
+
   // cv::Mat cvmat2;
   // cvmat2 = cv::imread(img_file);
 

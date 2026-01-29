@@ -1,2 +1,13 @@
 **/build/
-
+**/results/
+*.bmodel
+**/models/
+**/datasets/
+*zip
+*/dist/
+*/pyadd.egg-info/
+*.onnx
+*.safetensors
+*output
+*.bin
+*.pth

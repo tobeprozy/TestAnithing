@@ -1,0 +1,15 @@
+{
+  "train_batch_size": 32,
+  "optimizer": {
+    "type": "Adam",
+    "params": {
+      "lr": 0.001
+    }
+  },
+  "zero_optimization": {
+    "stage": 2,
+    "offload_optimizer": {
+      "device": "cpu"
+    }
+  }
+}

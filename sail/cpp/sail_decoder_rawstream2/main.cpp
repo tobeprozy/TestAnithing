@@ -51,15 +51,16 @@ int main(int argc, char *argv[]){
     // sail::BMImage  image;
 
     sail::Decoder_RawStream decoder_rawStream(dev_id,"h264");
-
+    //第四个参数是考虑到，假如传进来一个包含很多帧的视频，那我输出又只有一个image，那么就让指针自动往后移动，调用一次，读一张图
+    //如果传进来一帧,下一帧传进的是一个新的地址bs_buffer，那么必须调用一次，初始化一次avio_ctx，
     int frameCount =0;
     while(true){
-         //第四个参数是考虑到，假如传进来一个包含很多帧的视频，那我输出又只有一个image，那么就让指针自动往后移动，调用一次，读一张图
-         //如果传进来一帧,下一帧传进的是一个新的地址bs_buffer，那么必须调用一次，初始化一次avio_ctx，
+        
+
          decoder_rawStream.read_(bs_buffer,numBytes,image,false);
          // Generate output filename, e.g. "output/out_0001.bmp",
-         string out = "output/out_" +to_string(frameCount) + ".bmp"; 
-         bm_image_write_to_bmp(image, out.c_str()); frameCount++; // Increment frame count
+        //  string out = "output/out_" +to_string(frameCount) + ".bmp"; 
+        //  bm_image_write_to_bmp(image, out.c_str()); frameCount++; // Increment frame count
     }
 
     av_free(bs_buffer);

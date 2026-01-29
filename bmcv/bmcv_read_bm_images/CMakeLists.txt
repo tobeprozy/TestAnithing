@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(test)
 # set(CMAKE_CXX_STANDARD 14)
 SET(CMAKE_BUILD_TYPE "Debug")
-set(CMAKE_CXX_FLAGS "-O3")
+# set(CMAKE_CXX_FLAGS "-O3")
 # SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 # message("cur dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
@@ -27,12 +27,20 @@ if (${TARGET_ARCH} STREQUAL "base")
     include_directories(${OpenCV_INCLUDE_DIRS})
     link_directories(${OpenCV_LIB_DIRS})
     include_directories("./include/")
+   
+    # use ffmpeg
+    set(FFMPEG_DIR  /opt/sophon/sophon-ffmpeg-latest/lib/cmake)
+    find_package(FFMPEG REQUIRED)
+    include_directories(${FFMPEG_INCLUDE_DIRS})
+    link_directories(${FFMPEG_LIB_DIRS})
 
     aux_source_directory(. SRC_FILES)
     aux_source_directory(./src/ SRC_FILES)
 
+
+    aux_source_directory(. SRC_FILES)
     add_executable(test ${SRC_FILES})
-    target_link_libraries(test ${the_libbmlib.so} ${OpenCV_LIBS} ${the_libbmrt.so} ${the_libbmcv.so} -lpthread)
+    target_link_libraries(test ${the_libbmlib.so} ${the_libbmrt.so} ${the_libbmcv.so} ${OpenCV_LIBS} ${FFMPEG_LIBS} -lpthread)
 
 elseif (${TARGET_ARCH} STREQUAL "pcie")
     message( "${TARGET_ARCH} mode, starting......")

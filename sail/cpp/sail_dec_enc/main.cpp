@@ -160,7 +160,6 @@ void decode_and_enqueues(const std::string& video_path, SafeQueue<std::shared_pt
             queue.enqueue(bmimg);
             std::cout << "read image from decoder, size: " << queue.size() << std::endl;
         }
-        
         frame_counter++; // 更新帧计数器
     }
 }
